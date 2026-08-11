@@ -206,7 +206,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_temp
-    entity_id: sensor.temperature
+    entity_id: sensor.t02_temperature
     on_value:
       - lvgl.label.update:
           id: temp_label
@@ -216,7 +216,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_humi
-    entity_id: sensor.env_iv_kit_humidity
+    entity_id: sensor.t02_humidity
     on_value:
       - lvgl.label.update:
           id: humi_label
@@ -226,7 +226,7 @@ sensor:
 
   - platform: homeassistant
     id: cur_co2
-    entity_id: sensor.env_iv_kit_co2_equivalent
+    entity_id: sensor.tech_1_tarnowskie_gory_pm2_5
     on_value:
       - lvgl.label.update:
           id: co2_label
@@ -476,7 +476,7 @@ time:
 text_sensor:
   - platform: homeassistant
     id: demo_light
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: light.black_top_cww
     on_value:
       then:
         - lvgl.widget.update:
@@ -524,7 +524,7 @@ text_sensor:
 
   - platform: homeassistant
     id: demo_light_brightness
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: light.black_top_cww
     attribute: brightness
     on_value:
       - lvgl.slider.update:
@@ -553,7 +553,7 @@ text_sensor:
   
   - platform: homeassistant
     id: demo_light_color
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: light.black_top_cww
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
