@@ -334,16 +334,16 @@ touchscreen:
       pi4ioe5v6408: pi4ioe1
       number: 5      
     # NB: Those min/max values are *after* swapping (raw x is 0..720).
-    calibration:
-      x_min: 0
-      x_max: 1280
-      y_min: 0
-      y_max: 720
+    #calibration:
+    #  x_min: 0
+    #  x_max: 1280
+    #  y_min: 0
+    #  y_max: 720
     # Landscape orientation
-    transform:
-      swap_xy: true
-      mirror_x: true
-      mirror_y: false
+    #transform:
+    #  swap_xy: true
+    #  mirror_x: true
+    #  mirror_y: false
     #on_release:
     #  - script.execute: activity_detected
     # Calibration debugging:
