@@ -83,7 +83,6 @@ lvgl:
     - script.execute: nav_rail_update              # Update rail UI
     - script.execute: sync_ha                      # Sync Home Assistant states if necessary
     - lvgl.display.set_rotation:
-        display: lcd
         rotation: 270
 
   byte_order: little_endian
