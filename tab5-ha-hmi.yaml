@@ -326,7 +326,7 @@ sensor:
 touchscreen:
   - platform: st7123
     id: touch
-    i2c_id: bus_a
+    i2c_id: bsp_bus
     interrupt_pin: GPIO23
     display: lcd
     update_interval: never
