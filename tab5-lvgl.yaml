@@ -75,8 +75,8 @@ font:
 lvgl:
   displays:
     - display: lcd
-      rotation: 270
-  rotation: 270
+      rotation: 0
+  rotation: 0
   on_boot:
     - rx8130.read_time:
     - script.execute: expand_nav_btn_click_area    # Expand the click area of nav rail buttons
@@ -84,7 +84,7 @@ lvgl:
     - script.execute: sync_ha                      # Sync Home Assistant states if necessary
     - lvgl.display.set_rotation:
         display: lcd
-        rotation: 270
+        rotation: 0
 
   byte_order: little_endian
   style_definitions:
