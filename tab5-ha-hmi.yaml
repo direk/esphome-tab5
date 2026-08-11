@@ -45,7 +45,7 @@ api:
       - lvgl.widget.hide: api_icon_label
   encryption:
     key: !secret tab5_ha_hmi__encryption_key
-    
+
 ota:
   platform: esphome
 
@@ -343,7 +343,7 @@ display:
       height: 1280
       width: 720
     model: M5Stack-Tab5
-    rotation: 270°
+    #rotation: 270°
     reset_pin:
       pi4ioe5v6408: pi4ioe1
       number: 4
