@@ -36,6 +36,15 @@ psram:
   mode: hex
   speed: 200MHz
 
+# See https://community.home-assistant.io/t/m5stack-tab5/888543/23
+external_components:
+  - source: github://pr#12075
+    components: [st7123]
+    refresh: 1h
+  - source: github://pr#12074
+    components: [mipi_dsi]
+    refresh: 1h
+
 api:
   on_client_connected: 
     then:
@@ -314,23 +323,54 @@ sensor:
               }
             }
 
-  
 touchscreen:
-  - platform: gt911
+  - platform: st7123
+    id: touch
+    i2c_id: bus_a
     interrupt_pin: GPIO23
+    display: lcd
     update_interval: never
     reset_pin:
       pi4ioe5v6408: pi4ioe1
-      number: 5
-    transform:
-      swap_xy: true
-      mirror_x: true
+      number: 5      
+    # NB: Those min/max values are *after* swapping (raw x is 0..720).
     calibration:
       x_min: 0
       x_max: 1280
       y_min: 0
       y_max: 720
-    id: touch
+    # Landscape orientation
+    transform:
+      swap_xy: true
+      mirror_x: true
+      mirror_y: false
+    on_release:
+      - script.execute: activity_detected
+    # Calibration debugging:
+    # on_touch:
+    #   - lambda: |-
+    #         ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
+    #             touch.x,
+    #             touch.y,
+    #             touch.x_raw,
+    #             touch.y_raw
+    #             );
+#touchscreen:
+#  - platform: gt911
+#    interrupt_pin: GPIO23
+#    update_interval: never
+#    reset_pin:
+#      pi4ioe5v6408: pi4ioe1
+#      number: 5
+#    transform:
+#      swap_xy: true
+#      mirror_x: true
+#    calibration:
+#      x_min: 0
+#      x_max: 1280
+#      y_min: 0
+#      y_max: 720
+#    id: touch
 
       
 esp_ldo:
@@ -339,11 +379,12 @@ esp_ldo:
 
 display:
   - platform: mipi_dsi
+    id: lcd
     dimensions:
       height: 1280
       width: 720
-    model: M5Stack-Tab5
-    #rotation: 270°
+    model: M5Stack-Tab5-V2
+    #rotation: 270
     reset_pin:
       pi4ioe5v6408: pi4ioe1
       number: 4
