@@ -381,8 +381,8 @@ display:
   - platform: mipi_dsi
     id: lcd
     dimensions:
-      height: 1280
-      width: 720
+      width: 1280
+      height: 720
     model: M5STACK-TAB5-ST7123
     #rotation: 270
     reset_pin:
