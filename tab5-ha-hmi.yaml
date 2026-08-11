@@ -329,7 +329,7 @@ touchscreen:
     i2c_id: bsp_bus
     interrupt_pin: GPIO23
     display: lcd
-    update_interval: never
+    update_interval: 16ms
     reset_pin:
       pi4ioe5v6408: pi4ioe1
       number: 5      
