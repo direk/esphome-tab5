@@ -15,7 +15,7 @@ packages:
   remote_package_files:
       url: https://github.com/direk/esphome-tab5
       files: [ tab5-globals.yaml, tab5-lvgl.yaml, tab5-scripts.yaml]
-      refresh: 1d
+      refresh: 1min
 
 esp32_hosted:
   variant: esp32c6
@@ -381,8 +381,8 @@ display:
   - platform: mipi_dsi
     id: lcd
     dimensions:
-      width: 1280
-      height: 720
+      width: 720
+      height: 1280
     model: M5STACK-TAB5-ST7123
     #rotation: 270
     reset_pin:
