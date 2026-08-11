@@ -13,8 +13,8 @@ esp32:
 
 packages:
   remote_package_files:
-      url: https://github.com/m5stack/esphome-yaml
-      files: [ common/tab5-globals.yaml, common/tab5-lvgl.yaml, common/tab5-scripts.yaml]
+      url: https://github.com/direk/esphome-tab5
+      files: [ tab5-globals.yaml, tab5-lvgl.yaml, tab5-scripts.yaml]
       refresh: 1d
 
 esp32_hosted:
@@ -43,7 +43,9 @@ api:
   on_client_disconnected: 
     then:
       - lvgl.widget.hide: api_icon_label
-
+  encryption:
+    key: !secret tab5_ha_hmi__encryption_key
+    
 ota:
   platform: esphome
 
