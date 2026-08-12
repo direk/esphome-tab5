@@ -400,7 +400,7 @@ lvgl:
                         - homeassistant.action:
                             action: light.turn_on
                             data:
-                              entity_id: ${LightRGB01}
+                              entity_id: light.${LightRGB01}
                               brightness: !lambda return int(x);
                         - lvgl.label.update:
                             id: light_bright_label
@@ -439,7 +439,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: '${LightRGB01}'
+                              light_name: 'light.${LightRGB01}'
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -465,7 +465,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: '${LightRGB01}'
+                              light_name: 'light.${LightRGB01}'
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -501,7 +501,7 @@ lvgl:
                               - homeassistant.action:
                                   action: light.toggle
                                   data:
-                                    entity_id: ${LightRGB01}
+                                    entity_id: light.${LightRGB01}
                         - button:
                             id: bright_ctrl_btn
                             styles: card_md_icon_btn
@@ -948,7 +948,7 @@ lvgl:
                           - homeassistant.action:
                               action: light.toggle
                               data:
-                                entity_id: ${LightRGB01}
+                                entity_id: light.${LightRGB01}
 
                     - label:
                         styles: card_sm_main_label

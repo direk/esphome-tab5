@@ -1,6 +1,6 @@
 substitutions:
   # to be used in code as ${LightRGB01}
-  LightRGB01: light.black_top_cww
+  LightRGB01: black_top_cww
 
   DashboardTemperature: sensor.t02_temperature
   DashboardHumidity: sensor.t02_humidity
@@ -437,7 +437,7 @@ time:
 text_sensor:
   - platform: homeassistant
     id: ${LightRGB01}
-    entity_id: ${LightRGB01}
+    entity_id: light.${LightRGB01}
     on_value:
       then:
         - lvgl.widget.update:
@@ -485,7 +485,7 @@ text_sensor:
 
   - platform: homeassistant
     id: ${LightRGB01}_brightness
-    entity_id: ${LightRGB01}
+    entity_id: light.${LightRGB01}
     attribute: brightness
     on_value:
       - lvgl.slider.update:
@@ -514,7 +514,7 @@ text_sensor:
   
   - platform: homeassistant
     id: ${LightRGB01}_color
-    entity_id: ${LightRGB01}
+    entity_id: light.${LightRGB01}
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
