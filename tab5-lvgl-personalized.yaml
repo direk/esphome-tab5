@@ -135,7 +135,7 @@ lvgl:
       #border_opa: TRANSP
       border_width: 1         # Thickness of the border
       border_color: 0xFF0000  # Red border (RGB hex)
-      border_opa: 255         # Border opacity (0–255)
+      border_opa: 100%         # Border opacity (0–255)
 
       height: 100%
       width: 1080
