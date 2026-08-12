@@ -372,7 +372,7 @@ lvgl:
                       on_press:
                         - lvgl.widget.hide: light_card_modal_container
                   - label:
-                      id: ${LightRGB01}_light_bright_label
+                      id: light_bright_label
                       text_font: montserrat_48
                       align: TOP_MID
                       y: 30
@@ -385,7 +385,7 @@ lvgl:
                       radius: 42
                       min_value: 0
                       max_value: 255
-                      id: ${LightRGB01}_light_slider
+                      id: light_slider
                       bg_color: 0xECECEC # Default inactivate color
                       bg_opa: COVER
                       indicator:
@@ -395,7 +395,7 @@ lvgl:
                         bg_opa: TRANSP
                       on_boot:
                         - lambda: |-
-                            lv_obj_move_foreground(id(${LightRGB01}_light_slider));
+                            lv_obj_move_foreground(id(light_slider));
                       on_release:
                         - homeassistant.action:
                             action: light.turn_on
@@ -473,7 +473,7 @@ lvgl:
                       
                   # Button group
                   - obj:
-                      width: 280
+                      width: 320 # 280 previously
                       height: 84
                       radius: 50
                       scrollable: false
@@ -487,7 +487,7 @@ lvgl:
                         flex_align_track: CENTER
                       widgets:
                         - button:
-                            id: ${LightRGB01}_pwr_btn
+                            id: pwr_btn
                             styles: card_md_icon_btn
                             bg_opa: TRANSP
                             widgets:
@@ -515,7 +515,7 @@ lvgl:
                             on_press:
                               - lvgl.widget.hide: color_palette_canvas
                               - lvgl.widget.hide: color_palette_indicator
-                              - lvgl.widget.show: ${LightRGB01}_light_slider
+                              - lvgl.widget.show: light_slider
                         - button:
                             id: color_palette_btn
                             styles: card_md_icon_btn
@@ -528,7 +528,7 @@ lvgl:
                                   text_font: extra_icon
                                   text: "\U000F03D8"
                             on_press:
-                              - lvgl.widget.hide: ${LightRGB01}_light_slider
+                              - lvgl.widget.hide: light_slider
                               - lvgl.widget.show: color_palette_canvas
                               - lvgl.widget.show: color_palette_indicator
       - obj:
@@ -915,7 +915,7 @@ lvgl:
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 0
               - obj:
-                  id: ${LightRGB01}_click_area
+                  id: click_area
                   styles: card_sm
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 0
@@ -926,11 +926,11 @@ lvgl:
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
                     - lvgl.widget.hide: color_palette_indicator
-                    - lvgl.widget.show: ${LightRGB01}_light_slider
+                    - lvgl.widget.show: light_slider
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: ${LightRGB01}_btn
+                        id: btn
                         checkable: true
                         state:
                           checked: false
@@ -938,7 +938,7 @@ lvgl:
                           bg_color: 0xFDF3D8    # Dim yellow
                         widgets:
                           - label:
-                              id: ${LightRGB01}_label
+                              id: label
                               text_font: extra_icon
                               text_color: 0X9E9E9E
                               text: "\U000F18DE"
@@ -955,7 +955,7 @@ lvgl:
                         text: "Area 1"
                     - label:
                         styles: card_sm_sub_label
-                        id: ${LightRGB01}_status
+                        id: status
                         text: "OFF"
         - label:
             x: 220

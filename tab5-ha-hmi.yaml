@@ -441,15 +441,15 @@ text_sensor:
     on_value:
       then:
         - lvgl.widget.update:
-            id: ${LightRGB01}_btn
+            id: btn
             state:
               checked: !lambda return x == "on";
               disabled: !lambda return ( x == "unavailable" ) or ( x == "unknown" );
         - lvgl.widget.update:
-            id: ${LightRGB01}_click_area
+            id: click_area
             clickable: !lambda return !((x == "unavailable") || (x == "unknown"));
         - lvgl.label.update:
-            id: ${LightRGB01}_label
+            id: label
             text_color: !lambda |-
               if ( x == "on" ) {
                   return lv_color_hex(0xF5C23B);
@@ -467,7 +467,7 @@ text_sensor:
                 snprintf(buf, sizeof(buf), "%s", icon.c_str());
                 return buf;
         - lvgl.label.update:
-            id: ${LightRGB01}_status
+            id: status
             text: !lambda |-
                 static char buf[10];
                 std::string text;
@@ -484,12 +484,12 @@ text_sensor:
                 return buf;
 
   - platform: homeassistant
-    id: ${LightRGB01}_brightness
+    id: brightness
     entity_id: light.${LightRGB01}
     attribute: brightness
     on_value:
       - lvgl.slider.update:
-          id: ${LightRGB01}_light_slider
+          id: light_slider
           value: !lambda |-
             if (x.empty() || x == "None" || 
                 x == "null" || x == "unknown" 
@@ -499,7 +499,7 @@ text_sensor:
             return std::stoi(x);
 
       - lvgl.label.update:
-          id: ${LightRGB01}_light_bright_label
+          id: light_bright_label
           text: !lambda |-
             if ( x.empty() || x == "None" || x == "null" ) {
                 return std::string("off");
@@ -513,7 +513,7 @@ text_sensor:
             }
   
   - platform: homeassistant
-    id: ${LightRGB01}_color
+    id: color
     entity_id: light.${LightRGB01}
     attribute: rgb_color
     on_value:
