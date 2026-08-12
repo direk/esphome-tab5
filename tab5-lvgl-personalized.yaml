@@ -917,6 +917,7 @@ lvgl:
               - obj:
                   id: click_area
                   styles: card_sm
+                  scrollable: false
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 0
                   grid_cell_x_align: STRETCH
