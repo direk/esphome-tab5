@@ -70,6 +70,13 @@ font:
     size: 96
     bpp: 4
 
+globals:
+  # Tracks which light entity the shared modal should control.
+  # Set by each card's on_press before opening the modal.
+  - id: active_light_entity
+    type: std::string
+    restore_value: no
+    initial_value: '"light.unit_neo_hex_unit_neohex"'
 
 lvgl:
   rotation: 0°
@@ -499,7 +506,7 @@ lvgl:
                         pad_column: 8
                       widgets:
                         - button:
-                            id: demo_light_pwr_btn
+                            id: modal_light_pwr_btn
                             styles: card_md_icon_btn
                             bg_opa: TRANSP
                             widgets:
@@ -930,7 +937,7 @@ lvgl:
 
               # --- Card 1: Area 1 (row 1, col 0) ---
               - obj:
-                  id: demo_light_click_area
+                  id: light_01_click_area
                   styles: card_sm
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 0
@@ -947,7 +954,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: demo_light_btn
+                        id: light_01_btn
                         checkable: true
                         state:
                           checked: false
@@ -955,7 +962,7 @@ lvgl:
                           bg_color: 0xFDF3D8    # Dim yellow
                         widgets:
                           - label:
-                              id: demo_light_label
+                              id: light_01_label
                               text_font: extra_icon
                               text_color: 0X9E9E9E
                               text: "\U000F18DE"
@@ -971,12 +978,12 @@ lvgl:
                         text: "Area 1"
                     - label:
                         styles: card_sm_sub_label
-                        id: demo_light_status
+                        id: light_01_status
                         text: "OFF"
 
               # --- Card 2: Area 2 (row 1, col 1) ---
               - obj:
-                  id: light2_click_area
+                  id: light_02_click_area
                   styles: card_sm
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 1
@@ -993,7 +1000,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: light2_btn
+                        id: light_02_btn
                         checkable: true
                         state:
                           checked: false
@@ -1001,7 +1008,7 @@ lvgl:
                           bg_color: 0xFDF3D8
                         widgets:
                           - label:
-                              id: light2_label
+                              id: light_02_label
                               text_font: extra_icon
                               text_color: 0x9E9E9E
                               text: "\U000F18DE"
@@ -1016,12 +1023,12 @@ lvgl:
                         text: "Area 2"
                     - label:
                         styles: card_sm_sub_label
-                        id: light2_status
+                        id: light_02_status
                         text: "OFF"
 
               # --- Card 3: Area 3 (row 2, col 0) ---
               - obj:
-                  id: light3_click_area
+                  id: light_03_click_area
                   styles: card_sm
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 0
@@ -1038,7 +1045,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: light3_btn
+                        id: light_03_btn
                         checkable: true
                         state:
                           checked: false
@@ -1046,7 +1053,7 @@ lvgl:
                           bg_color: 0xFDF3D8
                         widgets:
                           - label:
-                              id: light3_label
+                              id: light_03_label
                               text_font: extra_icon
                               text_color: 0x9E9E9E
                               text: "\U000F18DE"
@@ -1061,12 +1068,12 @@ lvgl:
                         text: "Area 3"
                     - label:
                         styles: card_sm_sub_label
-                        id: light3_status
+                        id: light_03_status
                         text: "OFF"
 
               # --- Card 4: Area 4 (row 2, col 1) ---
               - obj:
-                  id: light4_click_area
+                  id: light_04_click_area
                   styles: card_sm
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 1
@@ -1083,7 +1090,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: light4_btn
+                        id: light_04_btn
                         checkable: true
                         state:
                           checked: false
@@ -1091,7 +1098,7 @@ lvgl:
                           bg_color: 0xFDF3D8
                         widgets:
                           - label:
-                              id: light4_label
+                              id: light_04_label
                               text_font: extra_icon
                               text_color: 0x9E9E9E
                               text: "\U000F18DE"
@@ -1106,12 +1113,12 @@ lvgl:
                         text: "Area 4"
                     - label:
                         styles: card_sm_sub_label
-                        id: light4_status
+                        id: light_04_status
                         text: "OFF"
 
               # --- Card 5: Area 5 (row 3, col 0) ---
               - obj:
-                  id: light5_click_area
+                  id: light_05_click_area
                   styles: card_sm
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 0
@@ -1128,7 +1135,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: light5_btn
+                        id: light_05_btn
                         checkable: true
                         state:
                           checked: false
@@ -1136,7 +1143,7 @@ lvgl:
                           bg_color: 0xFDF3D8
                         widgets:
                           - label:
-                              id: light5_label
+                              id: light_05_label
                               text_font: extra_icon
                               text_color: 0x9E9E9E
                               text: "\U000F18DE"
@@ -1151,12 +1158,12 @@ lvgl:
                         text: "Area 5"
                     - label:
                         styles: card_sm_sub_label
-                        id: light5_status
+                        id: light_05_status
                         text: "OFF"
 
               # --- Card 6: Area 6 (row 3, col 1) ---
               - obj:
-                  id: light6_click_area
+                  id: light_06_click_area
                   styles: card_sm
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 1
@@ -1173,7 +1180,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: light6_btn
+                        id: light_06_btn
                         checkable: true
                         state:
                           checked: false
@@ -1181,7 +1188,7 @@ lvgl:
                           bg_color: 0xFDF3D8
                         widgets:
                           - label:
-                              id: light6_label
+                              id: light_06_label
                               text_font: extra_icon
                               text_color: 0x9E9E9E
                               text: "\U000F18DE"
@@ -1196,7 +1203,7 @@ lvgl:
                         text: "Area 6"
                     - label:
                         styles: card_sm_sub_label
-                        id: light6_status
+                        id: light_06_status
                         text: "OFF"
         - label:
             x: 220

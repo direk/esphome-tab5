@@ -658,11 +658,3 @@ text_sensor:
           id: temp_spin_box
           value: !lambda |-
             return std::stof(x) * 10;
-
-globals:
-  # Tracks which light entity the shared modal should control.
-  # Set by each card's on_press before opening the modal.
-  - id: active_light_entity
-    type: std::string
-    restore_value: no
-    initial_value: '"light.unit_neo_hex_unit_neohex"'
