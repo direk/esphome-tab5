@@ -71,13 +71,14 @@ font:
     bpp: 4
 
 lvgl:
-  rotation: 0°
+  #rotation: 270°
   on_boot:
     - rx8130.read_time:
     - script.execute: expand_nav_btn_click_area    # Expand the click area of nav rail buttons
     - script.execute: nav_rail_update              # Update rail UI
     - script.execute: sync_ha                      # Sync Home Assistant states if necessary
-    - lvgl.display.set_rotation: 0
+    - lvgl.display.set_rotation:
+        rotation: 270°
 
   byte_order: little_endian
   style_definitions:
