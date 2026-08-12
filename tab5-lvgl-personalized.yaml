@@ -76,7 +76,7 @@ globals:
   - id: active_light_entity
     type: std::string
     restore_value: no
-    initial_value: '"light.unit_neo_hex_unit_neohex"'
+    initial_value: '""'
 
 lvgl:
   rotation: 0°
