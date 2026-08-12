@@ -964,7 +964,7 @@ lvgl:
 
 
               - obj:
-                  id: click_area
+                  id: click_area_02
                   styles: card_sm
                   scrollable: false
                   grid_cell_row_pos: 2
