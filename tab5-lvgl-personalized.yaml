@@ -967,7 +967,7 @@ lvgl:
 
                     - button:
                         styles: card_sm_icon_btn
-                        id: btn
+                        id: btn02
                         checkable: true
                         state:
                           checked: false
@@ -975,7 +975,7 @@ lvgl:
                           bg_color: 0xFDF3D8    # Dim yellow
                         widgets:
                           - label:
-                              id: label
+                              id: label02
                               text_font: extra_icon
                               text_color: 0X9E9E9E
                               text: "\U000F18DE"
@@ -992,7 +992,7 @@ lvgl:
                         text: "Area 2"
                     - label:
                         styles: card_sm_sub_label
-                        id: status
+                        id: status02
                         text: "OFF"
 
 
