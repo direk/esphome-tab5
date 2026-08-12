@@ -4,7 +4,7 @@ substitutions:
 
   DashboardTemperature: sensor.t02_temperature
   DashboardHumidity: sensor.t02_humidity
-  DashboardPpm25: sensor.tech_1_tarnowskie_gory_pm2_4 
+  DashboardPpm25: sensor.tech_1_tarnowskie_gory_pm2_5 
   DashboardPpm10: sensor.tech_1_tarnowskie_gory_pm10
 
 esphome:
@@ -231,8 +231,20 @@ sensor:
       - lvgl.label.update:
           id: co2_label
           text:
-            format: "%.0f ppm"
+            format: "%.0f ppm 2.5"
             args: [ 'x' ]
+
+  - platform: homeassistant
+    id: iqa_text_value
+    entity_id: ${DashboardPpm10}
+    on_value:
+      - lvgl.label.update:
+          id: iaq_label
+          text:
+            format: "%.0f ppm 10"
+            args: [ 'x' ]
+
+            
 
   - platform: template
     id: battery_percent
@@ -518,16 +530,6 @@ text_sensor:
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
-
-  - platform: homeassistant
-    id: iqa_text_value
-    entity_id: sensor.env_iv_kit_bme68x_iaq_classification
-    on_value:
-      - lvgl.label.update:
-          id: iaq_label
-          text:
-            format: "%s"
-            args: [ 'x.c_str()' ]
 
   
   # AC Information

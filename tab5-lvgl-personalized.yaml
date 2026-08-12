@@ -132,7 +132,11 @@ lvgl:
     - id: content_container
       align: CENTER
       bg_opa: COVER
-      border_opa: TRANSP
+      #border_opa: TRANSP
+      border_width: 1         # Thickness of the border
+      border_color: 0xFF0000  # Red border (RGB hex)
+      border_opa: 255         # Border opacity (0–255)
+
       height: 100%
       width: 1080
       x: 96
@@ -861,9 +865,9 @@ lvgl:
                         grid_cell_row_pos: 0 
                         grid_cell_x_align: START
                         grid_cell_y_align: CENTER
-                    - label:
+                    - label: #ppm25
                         text_font: extra_icon
-                        text: "\U000F07E4"
+                        text: "\U000F1B5A"
                         grid_cell_column_pos: 0 
                         grid_cell_row_pos: 1 
                         grid_cell_x_align: CENTER
@@ -876,7 +880,7 @@ lvgl:
                         grid_cell_row_pos: 1 
                         grid_cell_x_align: START
                         grid_cell_y_align: CENTER
-                    - label:
+                    - label: #ppm10
                         text_font: extra_icon
                         text: "\U000F1B5A"
                         grid_cell_column_pos: 2 
@@ -896,6 +900,8 @@ lvgl:
             y: 40
             text_font: montserrat_48
             text: "Dashboard"      
+
+
     - id: light_page
       widgets:
         - obj:
@@ -963,6 +969,10 @@ lvgl:
             y: 40
             text_font: montserrat_48
             text: "Lights"
+
+
+
+
 
     - id: climate_page
       widgets:
