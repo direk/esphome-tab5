@@ -132,11 +132,7 @@ lvgl:
     - id: content_container
       align: CENTER
       bg_opa: COVER
-      #border_opa: TRANSP
-      border_width: 1         # Thickness of the border
-      border_color: 0xFF0000  # Red border (RGB hex)
-      border_opa: 100%         # Border opacity (0–255)
-
+      border_opa: TRANSP
       height: 100%
       width: 1080
       x: 96
@@ -928,6 +924,7 @@ lvgl:
                   grid_cell_column_pos: 0
                   grid_cell_x_align: STRETCH
                   clickable: true
+                  
                   on_press:
                     - logger.log: "Demo Light Area Clicked!"
                     - lvgl.widget.show: light_card_modal_container
@@ -951,7 +948,7 @@ lvgl:
                               text: "\U000F18DE"
                               align: CENTER
                         on_short_click:
-                          - logger.log: "Toggle the light!"
+                          - logger.log: "Toggle the light 1"
                           - homeassistant.action:
                               action: light.toggle
                               data:
@@ -964,6 +961,45 @@ lvgl:
                         styles: card_sm_sub_label
                         id: status
                         text: "OFF"
+
+
+
+
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8    # Dim yellow
+                        widgets:
+                          - label:
+                              id: label
+                              text_font: extra_icon
+                              text_color: 0X9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - logger.log: "Toggle the light 2"
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.${LightRGB02}
+
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 2"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: status
+                        text: "OFF"
+
+
+
+
+
+
         - label:
             x: 220
             y: 40
