@@ -538,6 +538,7 @@ lvgl:
           height: 90
           bg_opa: TRANSP
           border_opa: TRANSP
+          scrollable: false
           layout:
             type: FLEX
             flex_flow: ROW_REVERSE
@@ -807,10 +808,10 @@ lvgl:
             widgets:
               - label:
                   id: time_label
-                  text_font: montserrat_96
+                  text_font: montserrat_120 #96
                   text: "00:00:00"
                   align: CENTER
-                  y: -100
+                  y: -140 #-100
               - label:
                   id: date_label
                   text_font: montserrat_32
@@ -1003,7 +1004,7 @@ lvgl:
 
                     - label:
                         styles: card_sm_main_label
-                        text: "Area 1"
+                        text: "Area 2"
                     - label:
                         styles: card_sm_sub_label
                         id: status_02
