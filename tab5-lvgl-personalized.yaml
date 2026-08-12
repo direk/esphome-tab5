@@ -515,7 +515,7 @@ lvgl:
                             on_press:
                               - lvgl.widget.hide: color_palette_canvas
                               - lvgl.widget.hide: color_palette_indicator
-                              - lvgl.widget.show: light_slider
+                              - lvgl.widget.show: ${LightRGB01}_light_slider
                         - button:
                             id: color_palette_btn
                             styles: card_md_icon_btn
@@ -528,7 +528,7 @@ lvgl:
                                   text_font: extra_icon
                                   text: "\U000F03D8"
                             on_press:
-                              - lvgl.widget.hide: light_slider
+                              - lvgl.widget.hide: ${LightRGB01}_light_slider
                               - lvgl.widget.show: color_palette_canvas
                               - lvgl.widget.show: color_palette_indicator
       - obj:
@@ -926,7 +926,7 @@ lvgl:
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
                     - lvgl.widget.hide: color_palette_indicator
-                    - lvgl.widget.show: light_slider
+                    - lvgl.widget.show: ${LightRGB01}_light_slider
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
