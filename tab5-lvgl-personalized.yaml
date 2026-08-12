@@ -963,11 +963,25 @@ lvgl:
                         text: "OFF"
 
 
-
-
+              - obj:
+                  id: click_area
+                  styles: card_sm
+                  scrollable: false
+                  grid_cell_row_pos: 2
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  
+                  on_press:
+                    - logger.log: "Demo Light Area Clicked! 02"
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: btn02
+                        id: btn_02
                         checkable: true
                         state:
                           checked: false
@@ -975,7 +989,7 @@ lvgl:
                           bg_color: 0xFDF3D8    # Dim yellow
                         widgets:
                           - label:
-                              id: label02
+                              id: label_02
                               text_font: extra_icon
                               text_color: 0X9E9E9E
                               text: "\U000F18DE"
@@ -989,10 +1003,10 @@ lvgl:
 
                     - label:
                         styles: card_sm_main_label
-                        text: "Area 2"
+                        text: "Area 1"
                     - label:
                         styles: card_sm_sub_label
-                        id: status02
+                        id: status_02
                         text: "OFF"
 
 
