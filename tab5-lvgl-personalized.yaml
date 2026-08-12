@@ -71,9 +71,9 @@ font:
     bpp: 4
 
   - file: gfonts://Montserrat@600
-    id: montserrat_120
-    size: 160
-    bpp: 4
+    id: montserrat_200
+    size: 200
+    bpp: 4    
 
 lvgl:
   #rotation: 270°
@@ -813,16 +813,16 @@ lvgl:
             widgets:
               - label:
                   id: time_label
-                  text_font: montserrat_120 #96
+                  text_font: montserrat_200 #96
                   text: "00:00:00"
                   align: CENTER
                   y: -140 #-100
               - label:
                   id: date_label
-                  text_font: montserrat_32
+                  text_font: montserrat_96 #32
                   text: "1970-01-01 Thu"
                   align: CENTER
-                  y: 30
+                  y: 10 #30
               - obj:
                   width: 800
                   height: 200
