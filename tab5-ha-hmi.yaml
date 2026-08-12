@@ -1,3 +1,12 @@
+substitutions:
+  # to be used in code as ${light-rgb-01}
+  light-rgb-01: light.black_top_cww
+
+  dashboard-temperature: sensor.t02_temperature
+  dashboard-humidity: sensor.t02_humidity
+  dashboard-ppm25: sensor.tech_1_tarnowskie_gory_pm2_4 
+  dashboard-ppm10: sensor.tech_1_tarnowskie_gory_pm10
+
 esphome:
   name: tab5-ha-hmi
   friendly_name: M5Stack Tab5 Home Assistant HMI
@@ -14,9 +23,8 @@ esp32:
 packages:
   remote_package_files:
       url: https://github.com/direk/esphome-tab5
-      files: [ tab5-globals.yaml, tab5-scripts.yaml]
-      refresh: 1d
-  lvgl_personalized: !include tab5-lvgl-personalized.yaml
+      files: [ tab5-globals.yaml, tab5-scripts.yaml, tab5-lvgl-personalized.yaml]
+      refresh: 1min
 
 esp32_hosted:
   variant: esp32c6
@@ -36,15 +44,6 @@ logger:
 psram:
   mode: hex
   speed: 200MHz
-
-# See https://community.home-assistant.io/t/m5stack-tab5/888543/23
-#external_components:
-#  - source: github://pr#12075
-#    components: [st7123]
-#    refresh: 1h
-#  - source: github://pr#12074
-#    components: [mipi_dsi]
-#    refresh: 1h
 
 api:
   on_client_connected: 
@@ -207,7 +206,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_temp
-    entity_id: sensor.temperature
+    entity_id: ${dashboard_temperature}
     on_value:
       - lvgl.label.update:
           id: temp_label
@@ -217,7 +216,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_humi
-    entity_id: sensor.env_iv_kit_humidity
+    entity_id: ${dashboard_humidity}
     on_value:
       - lvgl.label.update:
           id: humi_label
@@ -227,7 +226,7 @@ sensor:
 
   - platform: homeassistant
     id: cur_co2
-    entity_id: sensor.env_iv_kit_co2_equivalent
+    entity_id: ${dashboard_pm25}
     on_value:
       - lvgl.label.update:
           id: co2_label
@@ -334,46 +333,7 @@ touchscreen:
     reset_pin:
       pi4ioe5v6408: pi4ioe1
       number: 5      
-    # NB: Those min/max values are *after* swapping (raw x is 0..720).
-    #calibration:
-    #  x_min: 0
-    #  x_max: 1280
-    #  y_min: 0
-    #  y_max: 720
-    # Landscape orientation
-    #transform:
-    #  swap_xy: true
-    #  mirror_x: true
-    #  mirror_y: false
-    #on_release:
-    #  - script.execute: activity_detected
-    # Calibration debugging:
-    # on_touch:
-    #   - lambda: |-
-    #         ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
-    #             touch.x,
-    #             touch.y,
-    #             touch.x_raw,
-    #             touch.y_raw
-    #             );
-#touchscreen:
-#  - platform: gt911
-#    interrupt_pin: GPIO23
-#    update_interval: never
-#    reset_pin:
-#      pi4ioe5v6408: pi4ioe1
-#      number: 5
-#    transform:
-#      swap_xy: true
-#      mirror_x: true
-#    calibration:
-#      x_min: 0
-#      x_max: 1280
-#      y_min: 0
-#      y_max: 720
-#    id: touch
 
-      
 esp_ldo:
   - voltage: 2.5V
     channel: 3
@@ -385,7 +345,6 @@ display:
       height: 1280
       width: 720
     model: M5STACK-TAB5-ST7123
-    #rotation: 270
     reset_pin:
       pi4ioe5v6408: pi4ioe1
       number: 4
@@ -474,22 +433,23 @@ time:
                 auto t = id(ha_time).now();
                 return t.strftime("%Y-%m-%d %a").c_str();
 
+
 text_sensor:
   - platform: homeassistant
     id: demo_light
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: ${light-rgb-01}
     on_value:
       then:
         - lvgl.widget.update:
-            id: light_01_btn
+            id: demo_light_btn
             state:
               checked: !lambda return x == "on";
               disabled: !lambda return ( x == "unavailable" ) or ( x == "unknown" );
         - lvgl.widget.update:
-            id: light_01_click_area
+            id: demo_light_click_area
             clickable: !lambda return !((x == "unavailable") || (x == "unknown"));
         - lvgl.label.update:
-            id: light_01_label
+            id: demo_light_label
             text_color: !lambda |-
               if ( x == "on" ) {
                   return lv_color_hex(0xF5C23B);
@@ -507,7 +467,7 @@ text_sensor:
                 snprintf(buf, sizeof(buf), "%s", icon.c_str());
                 return buf;
         - lvgl.label.update:
-            id: light_01_status
+            id: demo_light_status
             text: !lambda |-
                 static char buf[10];
                 std::string text;
@@ -525,7 +485,7 @@ text_sensor:
 
   - platform: homeassistant
     id: demo_light_brightness
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: ${light-rgb-01}
     attribute: brightness
     on_value:
       - lvgl.slider.update:
@@ -554,7 +514,7 @@ text_sensor:
   
   - platform: homeassistant
     id: demo_light_color
-    entity_id: light.unit_neo_hex_unit_neohex
+    entity_id: ${light-rgb-01}
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
@@ -568,6 +528,7 @@ text_sensor:
           text:
             format: "%s"
             args: [ 'x.c_str()' ]
+
   
   # AC Information
   - platform: homeassistant
