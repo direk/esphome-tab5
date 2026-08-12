@@ -499,7 +499,7 @@ lvgl:
                               - homeassistant.action:
                                   action: light.toggle
                                   data:
-                                    entity_id: ${light-rgb-01}
+                                    entity_id: ${LightRGB01}
                         - button:
                             id: bright_ctrl_btn
                             styles: card_md_icon_btn

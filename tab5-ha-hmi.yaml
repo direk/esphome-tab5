@@ -1,11 +1,11 @@
 substitutions:
-  # to be used in code as ${light-rgb-01}
-  light-rgb-01: light.black_top_cww
+  # to be used in code as ${LightRGB01}
+  LightRGB01: light.black_top_cww
 
-  dashboard-temperature: sensor.t02_temperature
-  dashboard-humidity: sensor.t02_humidity
-  dashboard-ppm25: sensor.tech_1_tarnowskie_gory_pm2_4 
-  dashboard-ppm10: sensor.tech_1_tarnowskie_gory_pm10
+  DashboardTemperature: sensor.t02_temperature
+  DashboardHumidity: sensor.t02_humidity
+  DashboardPpm25: sensor.tech_1_tarnowskie_gory_pm2_4 
+  DashboardPpm10: sensor.tech_1_tarnowskie_gory_pm10
 
 esphome:
   name: tab5-ha-hmi
@@ -206,7 +206,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_temp
-    entity_id: ${dashboard_temperature}
+    entity_id: ${DashboardTemperatureemperature}
     on_value:
       - lvgl.label.update:
           id: temp_label
@@ -216,7 +216,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_humi
-    entity_id: ${dashboard_humidity}
+    entity_id: ${DashboardHumidity}
     on_value:
       - lvgl.label.update:
           id: humi_label
@@ -226,7 +226,7 @@ sensor:
 
   - platform: homeassistant
     id: cur_co2
-    entity_id: ${dashboard_pm25}
+    entity_id: ${DashboardPpm25}
     on_value:
       - lvgl.label.update:
           id: co2_label
@@ -437,7 +437,7 @@ time:
 text_sensor:
   - platform: homeassistant
     id: demo_light
-    entity_id: ${light-rgb-01}
+    entity_id: ${LightRGB01}
     on_value:
       then:
         - lvgl.widget.update:
@@ -485,7 +485,7 @@ text_sensor:
 
   - platform: homeassistant
     id: demo_light_brightness
-    entity_id: ${light-rgb-01}
+    entity_id: ${LightRGB01}
     attribute: brightness
     on_value:
       - lvgl.slider.update:
@@ -514,7 +514,7 @@ text_sensor:
   
   - platform: homeassistant
     id: demo_light_color
-    entity_id: ${light-rgb-01}
+    entity_id: ${LightRGB01}
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
