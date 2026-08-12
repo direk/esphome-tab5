@@ -372,7 +372,7 @@ lvgl:
                       on_press:
                         - lvgl.widget.hide: light_card_modal_container
                   - label:
-                      id: light_bright_label
+                      id: ${LightRGB01}_light_bright_label
                       text_font: montserrat_48
                       align: TOP_MID
                       y: 30
@@ -385,7 +385,7 @@ lvgl:
                       radius: 42
                       min_value: 0
                       max_value: 255
-                      id: light_slider
+                      id: ${LightRGB01}_light_slider
                       bg_color: 0xECECEC # Default inactivate color
                       bg_opa: COVER
                       indicator:
@@ -395,7 +395,7 @@ lvgl:
                         bg_opa: TRANSP
                       on_boot:
                         - lambda: |-
-                            lv_obj_move_foreground(id(light_slider));
+                            lv_obj_move_foreground(id(${LightRGB01}_light_slider));
                       on_release:
                         - homeassistant.action:
                             action: light.turn_on
@@ -487,7 +487,7 @@ lvgl:
                         flex_align_track: CENTER
                       widgets:
                         - button:
-                            id: demo_light_pwr_btn
+                            id: ${LightRGB01}_pwr_btn
                             styles: card_md_icon_btn
                             bg_opa: TRANSP
                             widgets:
@@ -886,7 +886,7 @@ lvgl:
                     - label:
                         text_font: montserrat_32
                         id: iaq_label
-                        text: "-"
+                        text: "X"
                         grid_cell_column_pos: 3 
                         grid_cell_row_pos: 1 
                         grid_cell_x_align: START
@@ -915,7 +915,7 @@ lvgl:
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 0
               - obj:
-                  id: demo_light_click_area
+                  id: ${LightRGB01}_click_area
                   styles: card_sm
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 0
@@ -930,7 +930,7 @@ lvgl:
                   widgets:
                     - button:
                         styles: card_sm_icon_btn
-                        id: demo_light_btn
+                        id: ${LightRGB01}_btn
                         checkable: true
                         state:
                           checked: false
@@ -938,7 +938,7 @@ lvgl:
                           bg_color: 0xFDF3D8    # Dim yellow
                         widgets:
                           - label:
-                              id: demo_light_label
+                              id: ${LightRGB01}_label
                               text_font: extra_icon
                               text_color: 0X9E9E9E
                               text: "\U000F18DE"
@@ -955,7 +955,7 @@ lvgl:
                         text: "Area 1"
                     - label:
                         styles: card_sm_sub_label
-                        id: demo_light_status
+                        id: ${LightRGB01}_status
                         text: "OFF"
         - label:
             x: 220
