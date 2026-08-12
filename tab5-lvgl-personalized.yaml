@@ -370,6 +370,14 @@ lvgl:
                             align: CENTER
                       on_press:
                         - lvgl.widget.hide: light_card_modal_container
+                  # Active light name — updated by each card's on_press
+                  - label:
+                      id: modal_light_title
+                      text_font: montserrat_32
+                      align: TOP_LEFT
+                      x: 90
+                      y: 22
+                      text: "Area 1"
                   - label:
                       id: light_bright_label
                       text_font: montserrat_48
@@ -399,7 +407,7 @@ lvgl:
                         - homeassistant.action:
                             action: light.turn_on
                             data:
-                              entity_id: light.unit_neo_hex_unit_neohex
+                              entity_id: !lambda return id(active_light_entity);
                               brightness: !lambda return int(x);
                         - lvgl.label.update:
                             id: light_bright_label
@@ -438,7 +446,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: 'light.unit_neo_hex_unit_neohex'
+                              light_name: !lambda return id(active_light_entity);
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -464,7 +472,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: 'light.unit_neo_hex_unit_neohex'
+                              light_name: !lambda return id(active_light_entity);
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -472,18 +480,23 @@ lvgl:
                       
                   # Button group
                   - obj:
-                      width: 280
+                      width: 340
                       height: 84
                       radius: 50
                       scrollable: false
                       align: BOTTOM_MID
                       bg_color: 0xF3F4F4
                       border_opa: TRANSP
+                      pad_left: 16
+                      pad_right: 16
+                      pad_top: 0
+                      pad_bottom: 0
                       layout:
                         type: flex
                         flex_align_main: CENTER
                         flex_align_cross: CENTER
                         flex_align_track: CENTER
+                        pad_column: 8
                       widgets:
                         - button:
                             id: demo_light_pwr_btn
@@ -500,7 +513,7 @@ lvgl:
                               - homeassistant.action:
                                   action: light.toggle
                                   data:
-                                    entity_id: light.unit_neo_hex_unit_neohex
+                                    entity_id: !lambda return id(active_light_entity);
                         - button:
                             id: bright_ctrl_btn
                             styles: card_md_icon_btn
@@ -913,6 +926,9 @@ lvgl:
                   text: "Room"
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 0
+                  grid_cell_column_span: 2
+
+              # --- Card 1: Area 1 (row 1, col 0) ---
               - obj:
                   id: demo_light_click_area
                   styles: card_sm
@@ -921,7 +937,9 @@ lvgl:
                   grid_cell_x_align: STRETCH
                   clickable: true
                   on_press:
-                    - logger.log: "Demo Light Area Clicked!"
+                    - lambda: |-
+                        id(active_light_entity) = "light.unit_neo_hex_unit_neohex";
+                        lv_label_set_text(id(modal_light_title), "Area 1");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
                     - lvgl.widget.hide: color_palette_indicator
@@ -948,13 +966,237 @@ lvgl:
                               action: light.toggle
                               data:
                                 entity_id: light.unit_neo_hex_unit_neohex
-
                     - label:
                         styles: card_sm_main_label
                         text: "Area 1"
                     - label:
                         styles: card_sm_sub_label
                         id: demo_light_status
+                        text: "OFF"
+
+              # --- Card 2: Area 2 (row 1, col 1) ---
+              - obj:
+                  id: light2_click_area
+                  styles: card_sm
+                  grid_cell_row_pos: 1
+                  grid_cell_column_pos: 1
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  on_press:
+                    - lambda: |-
+                        id(active_light_entity) = "light.area_2";
+                        lv_label_set_text(id(modal_light_title), "Area 2");
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: light2_btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8
+                        widgets:
+                          - label:
+                              id: light2_label
+                              text_font: extra_icon
+                              text_color: 0x9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.area_2
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 2"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: light2_status
+                        text: "OFF"
+
+              # --- Card 3: Area 3 (row 2, col 0) ---
+              - obj:
+                  id: light3_click_area
+                  styles: card_sm
+                  grid_cell_row_pos: 2
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  on_press:
+                    - lambda: |-
+                        id(active_light_entity) = "light.area_3";
+                        lv_label_set_text(id(modal_light_title), "Area 3");
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: light3_btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8
+                        widgets:
+                          - label:
+                              id: light3_label
+                              text_font: extra_icon
+                              text_color: 0x9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.area_3
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 3"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: light3_status
+                        text: "OFF"
+
+              # --- Card 4: Area 4 (row 2, col 1) ---
+              - obj:
+                  id: light4_click_area
+                  styles: card_sm
+                  grid_cell_row_pos: 2
+                  grid_cell_column_pos: 1
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  on_press:
+                    - lambda: |-
+                        id(active_light_entity) = "light.area_4";
+                        lv_label_set_text(id(modal_light_title), "Area 4");
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: light4_btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8
+                        widgets:
+                          - label:
+                              id: light4_label
+                              text_font: extra_icon
+                              text_color: 0x9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.area_4
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 4"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: light4_status
+                        text: "OFF"
+
+              # --- Card 5: Area 5 (row 3, col 0) ---
+              - obj:
+                  id: light5_click_area
+                  styles: card_sm
+                  grid_cell_row_pos: 3
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  on_press:
+                    - lambda: |-
+                        id(active_light_entity) = "light.area_5";
+                        lv_label_set_text(id(modal_light_title), "Area 5");
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: light5_btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8
+                        widgets:
+                          - label:
+                              id: light5_label
+                              text_font: extra_icon
+                              text_color: 0x9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.area_5
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 5"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: light5_status
+                        text: "OFF"
+
+              # --- Card 6: Area 6 (row 3, col 1) ---
+              - obj:
+                  id: light6_click_area
+                  styles: card_sm
+                  grid_cell_row_pos: 3
+                  grid_cell_column_pos: 1
+                  grid_cell_x_align: STRETCH
+                  clickable: true
+                  on_press:
+                    - lambda: |-
+                        id(active_light_entity) = "light.area_6";
+                        lv_label_set_text(id(modal_light_title), "Area 6");
+                    - lvgl.widget.show: light_card_modal_container
+                    - lvgl.widget.hide: color_palette_canvas
+                    - lvgl.widget.hide: color_palette_indicator
+                    - lvgl.widget.show: light_slider
+                  widgets:
+                    - button:
+                        styles: card_sm_icon_btn
+                        id: light6_btn
+                        checkable: true
+                        state:
+                          checked: false
+                        checked:
+                          bg_color: 0xFDF3D8
+                        widgets:
+                          - label:
+                              id: light6_label
+                              text_font: extra_icon
+                              text_color: 0x9E9E9E
+                              text: "\U000F18DE"
+                              align: CENTER
+                        on_short_click:
+                          - homeassistant.action:
+                              action: light.toggle
+                              data:
+                                entity_id: light.area_6
+                    - label:
+                        styles: card_sm_main_label
+                        text: "Area 6"
+                    - label:
+                        styles: card_sm_sub_label
+                        id: light6_status
                         text: "OFF"
         - label:
             x: 220

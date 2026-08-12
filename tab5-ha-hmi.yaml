@@ -14,8 +14,9 @@ esp32:
 packages:
   remote_package_files:
       url: https://github.com/direk/esphome-tab5
-      files: [ tab5-globals.yaml, tab5-lvgl.yaml, tab5-scripts.yaml]
-      refresh: 1min
+      files: [ tab5-globals.yaml, tab5-scripts.yaml]
+      refresh: 1d
+  lvgl_personalized: !include tab5-lvgl-personalized.yaml
 
 esp32_hosted:
   variant: esp32c6
@@ -206,7 +207,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_temp
-    entity_id: sensor.t02_temperature
+    entity_id: sensor.temperature
     on_value:
       - lvgl.label.update:
           id: temp_label
@@ -216,7 +217,7 @@ sensor:
   
   - platform: homeassistant
     id: cur_humi
-    entity_id: sensor.t02_humidity
+    entity_id: sensor.env_iv_kit_humidity
     on_value:
       - lvgl.label.update:
           id: humi_label
@@ -226,7 +227,7 @@ sensor:
 
   - platform: homeassistant
     id: cur_co2
-    entity_id: sensor.tech_1_tarnowskie_gory_pm2_5
+    entity_id: sensor.env_iv_kit_co2_equivalent
     on_value:
       - lvgl.label.update:
           id: co2_label
@@ -381,8 +382,8 @@ display:
   - platform: mipi_dsi
     id: lcd
     dimensions:
-      width: 720
       height: 1280
+      width: 720
     model: M5STACK-TAB5-ST7123
     #rotation: 270
     reset_pin:
@@ -447,55 +448,6 @@ media_player:
       format: FLAC
       sample_rate: 48000
       num_channels: 1
-    on_announcement:
-      # Stop the wake word (mWW or VA) if the mic is capturing
-      - if:
-          condition:
-            - microphone.is_capturing:
-          then:
-            - micro_wake_word.stop:
-    on_idle:
-      # Since VA isn't running, this is the end of user-intiated media playback. Restart the wake word.
-      - if:
-          condition:
-            not:
-              voice_assistant.is_running:
-          then:
-            - micro_wake_word.start:
-
-micro_wake_word:
-  id: mww
-  models:
-    - okay_nabu
-    - hey_mycroft
-    - hey_jarvis
-  on_wake_word_detected:
-    - voice_assistant.start:
-        wake_word: !lambda return wake_word;
-
-voice_assistant:
-  id: va
-  microphone: tab5_microphone
-  media_player: speaker_player
-  micro_wake_word: mww
-  on_end:
-    # Wait a short amount of time to see if an announcement starts
-    - wait_until:
-        condition:
-          - media_player.is_announcing:
-        timeout: 0.5s
-    # Announcement is finished and the I2S bus is free
-    - wait_until:
-        - and:
-            - not:
-                media_player.is_announcing:
-            - not:
-                speaker.is_playing:
-    - micro_wake_word.start:
-  on_client_connected:
-    - micro_wake_word.start:
-  on_client_disconnected:
-    - micro_wake_word.stop:
 
 time:
   - platform: homeassistant
@@ -525,7 +477,7 @@ time:
 text_sensor:
   - platform: homeassistant
     id: demo_light
-    entity_id: light.black_top_cww
+    entity_id: light.unit_neo_hex_unit_neohex
     on_value:
       then:
         - lvgl.widget.update:
@@ -573,7 +525,7 @@ text_sensor:
 
   - platform: homeassistant
     id: demo_light_brightness
-    entity_id: light.black_top_cww
+    entity_id: light.unit_neo_hex_unit_neohex
     attribute: brightness
     on_value:
       - lvgl.slider.update:
@@ -602,7 +554,7 @@ text_sensor:
   
   - platform: homeassistant
     id: demo_light_color
-    entity_id: light.black_top_cww
+    entity_id: light.unit_neo_hex_unit_neohex
     attribute: rgb_color
     on_value:
       - lambda: id(sync_ha_palette)->execute(x);
@@ -706,3 +658,11 @@ text_sensor:
           id: temp_spin_box
           value: !lambda |-
             return std::stof(x) * 10;
+
+globals:
+  # Tracks which light entity the shared modal should control.
+  # Set by each card's on_press before opening the modal.
+  - id: active_light_entity
+    type: std::string
+    restore_value: no
+    initial_value: '"light.unit_neo_hex_unit_neohex"'
