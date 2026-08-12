@@ -1,6 +1,7 @@
 substitutions:
   # to be used in code as ${LightRGB01}
   LightRGB01: black_top_cww
+  LightRGB02: black_top_rgb
 
   DashboardTemperature: sensor.t02_temperature
   DashboardHumidity: sensor.t02_humidity
@@ -24,7 +25,7 @@ packages:
   remote_package_files:
       url: https://github.com/direk/esphome-tab5
       files: [ tab5-globals.yaml, tab5-scripts.yaml, tab5-lvgl-personalized.yaml]
-      refresh: 1min
+      refresh: 1sec
 
 esp32_hosted:
   variant: esp32c6
