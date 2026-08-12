@@ -81,6 +81,7 @@ lvgl:
         rotation: 270°
 
   byte_order: little_endian
+  
   style_definitions:
     - id: sidebar
       bg_color: 0xE9EFEE
@@ -399,7 +400,7 @@ lvgl:
                         - homeassistant.action:
                             action: light.turn_on
                             data:
-                              entity_id: light.unit_neo_hex_unit_neohex
+                              entity_id: ${LightRGB01}
                               brightness: !lambda return int(x);
                         - lvgl.label.update:
                             id: light_bright_label
@@ -438,7 +439,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: 'light.unit_neo_hex_unit_neohex'
+                              light_name: '${LightRGB01}'
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -464,7 +465,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: 'light.unit_neo_hex_unit_neohex'
+                              light_name: '${LightRGB01}'
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -947,7 +948,7 @@ lvgl:
                           - homeassistant.action:
                               action: light.toggle
                               data:
-                                entity_id: light.unit_neo_hex_unit_neohex
+                                entity_id: ${LightRGB01}
 
                     - label:
                         styles: card_sm_main_label
