@@ -72,11 +72,13 @@ font:
 
 globals:
   # Tracks which light entity the shared modal should control.
-  # Set by each card's on_press before opening the modal.
-  - id: active_light_entity
-    type: std::string
+  - id: active_light_index
+    type: int
     restore_value: no
-    initial_value: '""'
+    initial_value: '0'
+  - id: light_entities
+    type: const char *[6]
+    initial_value: '{ "light.unit_neo_hex_unit_neohex", "light.area_2", "light.area_3", "light.area_4", "light.area_5", "light.area_6" }'
 
 lvgl:
   rotation: 0°
@@ -414,7 +416,7 @@ lvgl:
                         - homeassistant.action:
                             action: light.turn_on
                             data:
-                              entity_id: !lambda return id(active_light_entity);
+                              entity_id: !lambda return id(light_entities)[id(active_light_index)];
                               brightness: !lambda return int(x);
                         - lvgl.label.update:
                             id: light_bright_label
@@ -453,7 +455,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: !lambda return id(active_light_entity);
+                              light_name: !lambda return id(light_entities)[id(active_light_index)];
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -479,7 +481,7 @@ lvgl:
                             # The RGB values are from global variables
                             # which comes from the indicator
                             data:
-                              light_name: !lambda return id(active_light_entity);
+                              light_name: !lambda return id(light_entities)[id(active_light_index)];
                               red: !lambda return std::to_string(id(light_r));
                               green: !lambda return std::to_string(id(light_g));
                               blue: !lambda return std::to_string(id(light_b));
@@ -520,7 +522,7 @@ lvgl:
                               - homeassistant.action:
                                   action: light.toggle
                                   data:
-                                    entity_id: !lambda return id(active_light_entity);
+                                    entity_id: !lambda return id(light_entities)[id(active_light_index)];
                         - button:
                             id: bright_ctrl_btn
                             styles: card_md_icon_btn
@@ -945,7 +947,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.unit_neo_hex_unit_neohex";
+                        id(active_light_index) = 0;
                         lv_label_set_text(id(modal_light_title), "Area 1");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
@@ -991,7 +993,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.area_2";
+                        id(active_light_index) = 1;
                         lv_label_set_text(id(modal_light_title), "Area 2");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
@@ -1036,7 +1038,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.area_3";
+                        id(active_light_index) = 2;
                         lv_label_set_text(id(modal_light_title), "Area 3");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
@@ -1081,7 +1083,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.area_4";
+                        id(active_light_index) = 3;
                         lv_label_set_text(id(modal_light_title), "Area 4");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
@@ -1126,7 +1128,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.area_5";
+                        id(active_light_index) = 4;
                         lv_label_set_text(id(modal_light_title), "Area 5");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
@@ -1171,7 +1173,7 @@ lvgl:
                   clickable: true
                   on_press:
                     - lambda: |-
-                        id(active_light_entity) = "light.area_6";
+                        id(active_light_index) = 5;
                         lv_label_set_text(id(modal_light_title), "Area 6");
                     - lvgl.widget.show: light_card_modal_container
                     - lvgl.widget.hide: color_palette_canvas
